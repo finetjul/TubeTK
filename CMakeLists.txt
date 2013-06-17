@@ -427,6 +427,13 @@ option( TubeTK_USE_SUPERBUILD
   "Build TubeTK and the projects it depends on using a superbuild."
   ${superbuild_enabled_by_default} )
 mark_as_advanced( TubeTK_USE_SUPERBUILD )
+
+# If TubeTK_CONFIG_BINARY_DIR isn't defined, it means TubeTK is *NOT* build using Superbuild.
+# In that specific case, TubeTK_CONFIG_BINARY_DIR should default to TubeTK_BINARY_DIR
+if( NOT DEFINED TubeTK_CONFIG_BINARY_DIR )
+  set( TubeTK_CONFIG_BINARY_DIR ${CMAKE_BINARY_DIR} )
+endif( NOT DEFINED TubeTK_CONFIG_BINARY_DIR )
+
 if( TubeTK_USE_SUPERBUILD )
   if( TubeTK_BUILD_SLICER_EXTENSION )
     find_package( Slicer REQUIRED )
@@ -565,13 +572,13 @@ set( TubeTK_LIBRARY_DIRS
 
 # Configure TubeTKTargets.cmake.
 get_property(TubeTK_TARGETS GLOBAL PROPERTY TubeTK_TARGETS)
-export(TARGETS ${TubeTK_TARGETS} FILE ${TubeTK_BINARY_DIR}/TubeTKTargets.cmake)
+export(TARGETS ${TubeTK_TARGETS} FILE ${TubeTK_CONFIG_BINARY_DIR}/TubeTKTargets.cmake)
 
 set( TubeTK_TARGETS_FILE
-  ${TubeTK_BINARY_DIR}/TubeTKTargets.cmake )
+  ${TubeTK_CONFIG_BINARY_DIR}/TubeTKTargets.cmake )
 
 set( TubeTK_USE_FILE
-  ${TubeTK_BINARY_DIR}/UseTubeTK.cmake )
+  ${TubeTK_CONFIG_BINARY_DIR}/UseTubeTK.cmake )
 
 #-----------------------------------------------------------------------------
 # Configure TubeTKConfig.cmake.
@@ -579,13 +586,14 @@ set( TubeTK_USE_FILE
 # A different TubeTKConfig.cmake will need to be generated in order to build
 # against a TubeTK installation.
 configure_file( ${TubeTK_SOURCE_DIR}/CMake/TubeTKConfig.cmake.in
-  ${TubeTK_BINARY_DIR}/TubeTKConfig.cmake @ONLY )
+  ${TubeTK_CONFIG_BINARY_DIR}/TubeTKConfig.cmake @ONLY )
 
 #-----------------------------------------------------------------------------
 # Configure UseTubeTK.cmake.
 configure_file( ${TubeTK_SOURCE_DIR}/CMake/UseTubeTK.cmake.in
-  ${TubeTK_BINARY_DIR}/UseTubeTK.cmake @ONLY )
-#-------------------------------------------------------------------------------
+  ${TubeTK_CONFIG_BINARY_DIR}/UseTubeTK.cmake @ONLY )
+
+#-----------------------------------------------------------------------------
 # Configure a launcher for running TubeTK methods from the command line in
 # Microsoft Windows.
 configure_file( ${TubeTK_SOURCE_DIR}/CMake/tubeLauncher.bat.in
