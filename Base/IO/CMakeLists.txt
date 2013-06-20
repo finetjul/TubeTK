@@ -64,3 +64,6 @@ install( FILES
   ${TubeTK_Base_Numerics_TXX_Files}
   DESTINATION include
   )
+
+# Export target
+set_property( GLOBAL APPEND PROPERTY TubeTK_TARGETS TubeIO )

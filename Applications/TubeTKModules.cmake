@@ -83,5 +83,10 @@ list( APPEND TubeTK_${proj}_MODULES
   ${TubeTK_${proj}_VTK_MODULES}
   )
 
-include( ${TubeTK_SOURCE_DIR}/CMake/TubeTKMacroAddModules.cmake )
+if( NOT TubeTK_SOURCE_DIR )
+  find_package( TubeTK REQUIRED )
+  include( ${TubeTK_USE_FILE} )
+endif( NOT TubeTK_SOURCE_DIR )
+
+include ( ${TubeTK_CMAKE_EXTENSIONS_DIR}/TubeTKMacroAddModules.cmake )
 TubeTKAddModules( MODULES ${TubeTK_${proj}_MODULES} )

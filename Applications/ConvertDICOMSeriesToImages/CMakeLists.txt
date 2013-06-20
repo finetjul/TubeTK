@@ -40,6 +40,9 @@ if( WIN32 )
   endif( DISABLE_MSVC8_DEPRECATED_WARNINGS )
 endif( WIN32)
 
+find_package( TubeTK REQUIRED )
+include( ${TubeTK_USE_FILE} )
+
 # Find ITK
 find_package( ITK REQUIRED )
 include( ${USE_ITK_FILE} )

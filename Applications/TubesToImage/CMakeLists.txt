@@ -38,6 +38,9 @@ add_custom_target( TubesToImageInclude SOURCES
   ${TubesToImage_TXX_Files}
   )
 
+find_package( TubeTK REQUIRED )
+include( ${TubeTK_USE_FILE} )
+
 find_package( SlicerExecutionModel REQUIRED )
 include( ${SlicerExecutionModel_USE_FILE} )
 
@@ -54,7 +57,7 @@ SEMMacroBuildCLI(
     ${TubeTK_SOURCE_DIR}/Base/Common
     ${TubeTK_SOURCE_DIR}/Base/Filtering
     ${TubeTK_SOURCE_DIR}/Base/Registration
-    ${TubeTK_SOURCE_DIR}/Base/ObjectDocument
+    ${TubeTK_SOURCE_DIR}/Base/ObjectDocuments
   )
 
 #if( BUILD_TESTING )

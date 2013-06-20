@@ -45,6 +45,9 @@ add_custom_target( AtlasBuilderUsingIntensityInclude SOURCES
   ${AtlasBuilderUsingIntensity_TXX_Files}
   )
 
+find_package( TubeTK REQUIRED )
+include( ${TubeTK_USE_FILE} )
+
 find_package( SlicerExecutionModel REQUIRED )
 include( ${SlicerExecutionModel_USE_FILE} )
 

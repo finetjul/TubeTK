@@ -38,6 +38,9 @@ add_custom_target( TubeTransformInclude SOURCES
   ${TubeTransform_TXX_Files}
   )
 
+find_package( TubeTK REQUIRED )
+include( ${TubeTK_USE_FILE} )
+
 find_package( SlicerExecutionModel REQUIRED )
 include( ${SlicerExecutionModel_USE_FILE} )
 
