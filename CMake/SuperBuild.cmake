@@ -264,6 +264,7 @@ if( NOT USE_SYSTEM_ParameterSerializer )
   ## ParameterSerializer
   ##
   set( proj ParameterSerializer )
+
   # Set dependency list
   if( NOT USE_SYSTEM_ITK AND NOT TubeTK_BUILD_SLICER_EXTENSION )
     # Depends on ITK if ITK was build using superbuild
@@ -305,50 +306,56 @@ if ( NOT TubeTK_BUILD_SLICER_EXTENSION )
   #
   # SlicerExecutionModel
   #
-  set( proj SlicerExecutionModel )
-  # Set dependency list
-  if( NOT USE_SYSTEM_ITK )
-    # Depends on ITK if ITK was build using superbuild
-    set( SlicerExecutionModel_DEPENDS "Insight")
-  else()
-    set( SlicerExecutionModel_DEPENDS "" )
-  endif()
-  if( NOT USE_SYSTEM_ParameterSerializer )
-    # Depends on ITK if ITK was build using superbuild
-    set( SlicerExecutionModel_DEPENDS "ParameterSerializer")
-  else()
-    set( SlicerExecutionModel_DEPENDS "" )
-  endif()
-  ExternalProject_Add( ${proj}
-    # Has enhancements required for the SEM ParameterSerializer.
-    # Change back to upstream after pull request merged.
-    GIT_REPOSITORY "${GIT_PROTOCOL}://github.com/TubeTK/SlicerExecutionModel.git"
-    GIT_TAG "8ebf568a7b90a1d0e5ec7cf4cf2e8e490a24d0ab"
-    SOURCE_DIR ${CMAKE_BINARY_DIR}/${proj}
-    BINARY_DIR ${proj}-Build
-    CMAKE_GENERATOR ${gen}
-    CMAKE_ARGS
-      -DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}
-      -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}
-      -DCMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
-      -DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}
-      -DCMAKE_EXE_LINKER_FLAGS:STRING=${CMAKE_EXE_LINKER_FLAGS}
-      -DCMAKE_SHARED_LINKER_FLAGS:STRING=${CMAKE_SHARED_LINKER_FLAGS}
-      -DCMAKE_BUILD_TYPE:STRING=${build_type}
-      ${CMAKE_OSX_EXTERNAL_PROJECT_ARGS}
-      -DBUILD_SHARED_LIBS:BOOL=${shared}
-      -DBUILD_TESTING:BOOL=OFF
-      -DITK_DIR:PATH=${ITK_DIR}
-      -DSlicerExecutionModel_USE_SERIALIZER:BOOL=ON
-      -DJsonCpp_DIR:PATH=${JsonCpp_DIR}
-      -DParameterSerializer_DIR:PATH=${ParameterSerializer_DIR}
-      ${CMAKE_OSX_EXTERNAL_PROJECT_ARGS}
-    INSTALL_COMMAND ""
-    DEPENDS
-      ${SlicerExecutionModel_DEPENDS}
-    )
-  set( SlicerExecutionModel_DIR ${CMAKE_BINARY_DIR}/${proj}-Build )
-  set( TubeTK_DEPENDS ${TubeTK_DEPENDS} "SlicerExecutionModel" )
+  if( NOT USE_SYSTEM_SlicerExecutionModel )
+    set( proj SlicerExecutionModel )
+
+    # Set dependency list
+    if( NOT USE_SYSTEM_ITK )
+      # Depends on ITK if ITK was build using superbuild
+      set( SlicerExecutionModel_DEPENDS "Insight")
+    else( NOT USE_SYSTEM_ITK )
+      set( SlicerExecutionModel_DEPENDS "" )
+    endif( NOT USE_SYSTEM_ITK )
+
+    if( NOT USE_SYSTEM_ParameterSerializer )
+      # Depends on ITK if ITK was build using superbuild
+      set( SlicerExecutionModel_DEPENDS "ParameterSerializer")
+    else( NOT USE_SYSTEM_ParameterSerializer )
+      set( SlicerExecutionModel_DEPENDS "" )
+    endif( NOT USE_SYSTEM_ParameterSerializer )
+
+    ExternalProject_Add( ${proj}
+      # Has enhancements required for the SEM ParameterSerializer.
+      # Change back to upstream after pull request merged.
+      GIT_REPOSITORY "${GIT_PROTOCOL}://github.com/TubeTK/SlicerExecutionModel.git"
+      GIT_TAG "8ebf568a7b90a1d0e5ec7cf4cf2e8e490a24d0ab"
+      SOURCE_DIR ${CMAKE_BINARY_DIR}/${proj}
+      BINARY_DIR ${proj}-Build
+      CMAKE_GENERATOR ${gen}
+      CMAKE_ARGS
+        -DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}
+        -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}
+        -DCMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
+        -DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}
+        -DCMAKE_EXE_LINKER_FLAGS:STRING=${CMAKE_EXE_LINKER_FLAGS}
+        -DCMAKE_SHARED_LINKER_FLAGS:STRING=${CMAKE_SHARED_LINKER_FLAGS}
+        -DCMAKE_BUILD_TYPE:STRING=${build_type}
+        ${CMAKE_OSX_EXTERNAL_PROJECT_ARGS}
+        -DBUILD_SHARED_LIBS:BOOL=${shared}
+        -DBUILD_TESTING:BOOL=OFF
+        -DITK_DIR:PATH=${ITK_DIR}
+        -DSlicerExecutionModel_USE_SERIALIZER:BOOL=ON
+        -DJsonCpp_DIR:PATH=${JsonCpp_DIR}
+        -DParameterSerializer_DIR:PATH=${ParameterSerializer_DIR}
+        ${CMAKE_OSX_EXTERNAL_PROJECT_ARGS}
+      INSTALL_COMMAND ""
+      DEPENDS
+        ${SlicerExecutionModel_DEPENDS} )
+
+    set( SlicerExecutionModel_DIR ${CMAKE_BINARY_DIR}/${proj}-Build )
+    set( TubeTK_DEPENDS ${TubeTK_DEPENDS} "SlicerExecutionModel" )
+
+  endif( NOT USE_SYSTEM_SlicerExecutionModel )
 
   if( TubeTK_USE_QT )
 

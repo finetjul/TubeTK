@@ -347,6 +347,17 @@ if( NOT TubeTK_BUILD_SLICER_EXTENSION ) #---------------------------------------
       include( ${CTK_USE_FILE} )
     endif( USE_SYSTEM_CTK )
   endif( TubeTK_USE_QT )
+
+  #---------------------------------------------------------------------------
+  # Slicer Execution model Setup
+  option( USE_SYSTEM_SlicerExecutionModel
+    "Exclude SlicerExecutionModel from SuperBuild and use an existing build instead." OFF )
+  mark_as_advanced( USE_SYSTEM_SlicerExecutionModel )
+  if( USE_SYSTEM_SlicerExecutionModel )
+    find_package( SlicerExecutionModel REQUIRED )
+    include( ${SlicerExecutionModel_USE_FILE} )
+  endif( USE_SYSTEM_SlicerExecutionModel )
+
 else( NOT TubeTK_BUILD_SLICER_EXTENSION )
   unset( ITK_DIR )
   unset( VTK_DIR )
