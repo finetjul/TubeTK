@@ -42,6 +42,15 @@ set( TubeTK_VERSION
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" )
 set( CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/TubeTK" )
 set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/TubeTK" )
+#-----------------------------------------------------------------------------
+# Update CMake module path
+set(CMAKE_MODULE_PATH
+  ${TubeTK_SOURCE_DIR}/CMake
+  ${CMAKE_MODULE_PATH}
+  )
+
+include(SlicerMacroEmptyExternalProject)
+
 #-------------------------------------------------------------------------------
 # Setup for building 3D Slicer extensions.
 set( SlicerExecutionModel_CLI_RUNTIME_INSTALL_DIRECTORY "bin" )
@@ -394,9 +403,10 @@ if( TubeTK_USE_SUPERBUILD )
     include( ${Slicer_USE_FILE} )
   endif( TubeTK_BUILD_SLICER_EXTENSION )
 
-  include( "${CMAKE_CURRENT_SOURCE_DIR}/CMake/SuperBuild.cmake" )
+  add_subdirectory( "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Superbuild" )
   return()
 else( TubeTK_USE_SUPERBUILD )
+
   find_package( JsonCpp REQUIRED )
   include_directories( ${JsonCpp_INCLUDE_DIRS} )
 
