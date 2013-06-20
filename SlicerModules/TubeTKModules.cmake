@@ -20,14 +20,12 @@
 # limitations under the License.
 #
 ##############################################################################
-#
-# Do not edit. To add a module see TubeTKModules.cmake
-#
 
-include( ${CMAKE_CURRENT_SOURCE_DIR}/TubeTKModules.cmake )
+set( proj SlicerModules )
 
-foreach( module ${TubeTK_SlicerModules_MODULES} )
-  if( TubeTK_BUILD_${module} )
-    add_subdirectory( ${module} )
-  endif( TubeTK_BUILD_${module} )
-endforeach( module ${TubeTK_SlicerModules_MODULES} )
+set( TubeTK_${proj}_MODULES
+  SpatialObjectsModule
+  InteractiveConnectedComponentsUsingParzenPDFs )
+
+include( ${TubeTK_SOURCE_DIR}/CMake/TubeTKMacroAddModules.cmake )
+TubeTKAddModules( MODULES ${TubeTK_${proj}_MODULES} )

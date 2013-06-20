@@ -403,6 +403,12 @@ if( TubeTK_USE_SUPERBUILD )
     include( ${Slicer_USE_FILE} )
   endif( TubeTK_BUILD_SLICER_EXTENSION )
 
+  # Expose the TubeTK_BUILD_* variables
+  file( GLOB_RECURSE TubeTK_modules_files "TubeTKModules.cmake" )
+  foreach( f ${TubeTK_modules_files} )
+    include( ${f} )
+  endforeach( f ${TubeTK_modules_files} )
+
   add_subdirectory( "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Superbuild" )
   return()
 else( TubeTK_USE_SUPERBUILD )
