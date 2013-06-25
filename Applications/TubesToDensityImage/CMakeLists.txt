@@ -42,8 +42,10 @@ add_custom_target( TubesToDensityImageInclude SOURCES
   ${TubesToDensityImage_TXX_Files}
   )
 
-find_package( TubeTK REQUIRED )
-include( ${TubeTK_USE_FILE} )
+if( NOT TubeTK_SOURCE_DIR )
+  find_package( TubeTK REQUIRED )
+  include( ${TubeTK_USE_FILE} )
+endif( NOT TubeTK_SOURCE_DIR )
 
 find_package( SlicerExecutionModel REQUIRED )
 include( ${SlicerExecutionModel_USE_FILE} )

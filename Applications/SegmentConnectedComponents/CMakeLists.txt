@@ -25,8 +25,10 @@
 set( MODULE_NAME SegmentConnectedComponents )
 project( ${MODULE_NAME} )
 
-find_package( TubeTK REQUIRED )
-include( ${TubeTK_USE_FILE} )
+if( NOT TubeTK_SOURCE_DIR )
+  find_package( TubeTK REQUIRED )
+  include( ${TubeTK_USE_FILE} )
+endif( NOT TubeTK_SOURCE_DIR )
 
 find_package( SlicerExecutionModel REQUIRED )
 include( ${SlicerExecutionModel_USE_FILE} )
