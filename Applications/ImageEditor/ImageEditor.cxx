@@ -35,19 +35,14 @@ limitations under the License.
 //QtImageEditor includes
 #include "QtImageEditor.h"
 
-
-using namespace tube;
-
 int execImageEditor(int argc, char* argv[])
 {
   QApplication myApp( argc, argv );
 
-  QtImageEditor qtSlicerWindow(0,0);
+  tube::QtImageEditor qtSlicerWindow(0,0);
 
   qtSlicerWindow.setWindowTitle("ImageEditor");
-  qtSlicerWindow.loadImage();
   qtSlicerWindow.show();
-
   int execReturn;
   try
     {
@@ -67,7 +62,7 @@ int parseAndExecImageEditor(int argc, char* argv[])
   PARSE_ARGS;
   QApplication myApp( argc, argv );
 
-  QtImageEditor qtSlicerWindow(0);
+  tube::QtImageEditor qtSlicerWindow(0);
 
   qtSlicerWindow.setWindowTitle("ImageEditor");
 
@@ -110,9 +105,8 @@ int parseAndExecImageEditor(int argc, char* argv[])
     qtSlicerWindow.setDisplaySigma(QString::number(sigma, 'f', 2));
     qtSlicerWindow.applyFilter();
     }
-  qtSlicerWindow.OpenGlWindow->update();
-
   qtSlicerWindow.show();
+  qtSlicerWindow.OpenGlWindow->update();
   int execReturn;
   try
     {
@@ -143,3 +137,4 @@ int main( int argc, char* argv[] )
     }
   return res;
 }
+//}
